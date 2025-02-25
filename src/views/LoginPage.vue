@@ -1,6 +1,6 @@
 <script>
 import apiClient from "@/services/apiClient";
-import {useAuthStore} from "@/datastore/store";
+import {useAuthStore, useInfoStore} from "@/datastore/store";
 
 export default {
   name: "LoginPage",
@@ -18,7 +18,9 @@ export default {
             if (response.data.status_code === 200) {
               const token = response.data.data.token;
               const authStore = useAuthStore();
+              const infoStore = useInfoStore();
               authStore.setToken(token);
+              infoStore.setEmail(this.email);
 
               this.errorMessage = "";
               this.$router.push("/home");
