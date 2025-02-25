@@ -12,9 +12,10 @@ export default {
 
 <template>
   <div class="card">
-    <h3>{{ worker.firstname  }} {{ worker.lastname }}</h3>
-    <p>{{ worker.address }}</p>
-    <p>{{ worker.job_role }}</p>
+    <h3>Name : {{ worker.firstname  }} {{ worker.lastname }}</h3>
+    <p>Worker ID : {{ worker.nic }}</p>
+    <p>Address : {{ worker.address }}</p>
+    <p>Job : {{ worker.job_role }}</p>
   </div>
 </template>
 

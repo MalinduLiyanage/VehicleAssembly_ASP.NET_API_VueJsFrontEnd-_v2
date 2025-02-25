@@ -18,6 +18,9 @@ export default {
     showAdmins(){
       this.$emit("showAdmins");
     },
+    showAssembles(){
+      this.$emit("showAssembles");
+    },
     displayEmail(){
       const infoStore = useInfoStore()
       this.email = infoStore.getEmail();
@@ -29,7 +32,7 @@ export default {
       const infoStore = useInfoStore();
       infoStore.clearEmail()
 
-      this.$router.push("/");
+      this.$router.push({name:'Login'});
     }
   },
   mounted() {
@@ -40,6 +43,7 @@ export default {
 
 <template>
   <nav class="navbar">
+    <button class="nav-button-assembles" @click="showAssembles">Assembles</button>
     <button class="nav-button" @click="showVehicles">Vehicles</button>
     <button class="nav-button" @click="showWorkers">Workers</button>
     <button class="nav-button" @click="showAdmins">Admins</button>
@@ -78,6 +82,17 @@ export default {
   margin: 5px;
   cursor: default;
   border-radius: 5px;
+}
+
+.nav-button-assembles {
+  background-color: #1560c1;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s;
 }
 
 .nav-button-logout {

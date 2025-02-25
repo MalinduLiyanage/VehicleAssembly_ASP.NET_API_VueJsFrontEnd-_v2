@@ -1,8 +1,8 @@
 <script>
 export default {
-  name: "VehicleCard",
+  name: "AssembleCard",
   props: {
-    vehicle: {
+    assemble: {
       type: Object,
       required: true
     }
@@ -12,10 +12,11 @@ export default {
 
 <template>
   <div class="card">
-    <h3>Model : {{ vehicle.model }}</h3>
-    <p><strong>ID:</strong> {{ vehicle.vehicle_id  }}</p>
-    <p><strong>Color:</strong> {{ vehicle.color  }}</p>
-    <p><strong>Year:</strong> {{ vehicle.engine }}</p>
+    <p>Assignee ID : {{ assemble.assignee_id  }}</p>
+    <p>Vehicle ID : {{ assemble.vehicle_id  }}</p>
+    <p>Worker ID : {{ assemble.nic  }}</p>
+    <p>Date : {{ assemble.date  }}</p>
+    <p>Task Completed : {{ assemble.isCompleted  }}</p>
 
   </div>
 </template>
@@ -29,6 +30,7 @@ export default {
   padding: 20px;
   margin: 15px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  flex-direction: column;
 }
 
 </style>

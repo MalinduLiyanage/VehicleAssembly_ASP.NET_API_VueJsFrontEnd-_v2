@@ -8,10 +8,14 @@ import WorkerModal from "@/components/modals/WorkerModal.vue";
 import AdminModal from "@/components/modals/AdminModal.vue";
 import WorkerCard from "@/components/cards/WorkerCard.vue";
 import AdminCard from "@/components/cards/AdminCard.vue";
+import AssembleCard from "@/components/cards/AssembleCard.vue";
+import AssembleModal from "@/components/modals/AssembleModal.vue";
 
 export default {
   name: "HomePage",
   components:{
+    AssembleModal,
+    AssembleCard,
     NavbarComponent,
     VehicleCard,WorkerCard, AdminCard,
     BookModal: VehicleModal,WorkerModal,AdminModal
@@ -19,12 +23,14 @@ export default {
   data(){
     return {
       visibility: true,
-      showVehicles: true,
+      showVehicles: false,
       showWorkers: false,
       showAdmins: false,
+      showAssembles: true,
       showVehicleModal: false,
       showWorkerModal: false,
       showAdminModal: false,
+      showAssembleModal: false,
       data: [],
     }
   },
@@ -33,19 +39,29 @@ export default {
       this.showVehicles = true;
       this.showWorkers = false;
       this.showAdmins = false;
+      this.showAssembles = false;
       this.fetchVehicles();
     },
     showWorkersView(){
       this.showVehicles = false;
       this.showWorkers = true;
       this.showAdmins = false;
+      this.showAssembles = false;
       this.fetchWorkers();
     },
     showAdminsView(){
       this.showVehicles = false;
       this.showWorkers = false;
       this.showAdmins = true;
+      this.showAssembles = false;
       this.fetchAdmins();
+    },
+    showAssemblesView(){
+      this.showVehicles = false;
+      this.showWorkers = false;
+      this.showAdmins = false;
+      this.showAssembles = true;
+      this.fetchAssembles();
     },
     fetchVehicles() {
       apiClient.get('/Vehicle')
@@ -86,9 +102,22 @@ export default {
             this.errorMessage = "Error occurred: " + error.message;
           });
     },
+    fetchAssembles() {
+      apiClient.get('/Assembles')
+          .then((response) => {
+            if (response.data.status_code === 200) {
+              this.data = response.data.data.assembles;
+            } else {
+              this.errorMessage = "Bad Request!";
+            }
+          })
+          .catch((error) => {
+            this.errorMessage = "Error occurred: " + error.message;
+          });
+    },
   },
   mounted() {
-    this.fetchVehicles();
+    this.fetchAssembles();
   },
 }
 </script>
@@ -96,7 +125,8 @@ export default {
 <template>
   <navbar-component @showVehicles="showVehiclesView()"
                     @showWorkers="showWorkersView()"
-                    @showAdmins="showAdminsView()" />
+                    @showAdmins="showAdminsView()"
+                    @showAssembles="showAssemblesView()"/>
   <div v-if="showVehicles">
     <div class="header-container">
       <h1>Vehicle List</h1>
@@ -139,9 +169,24 @@ export default {
     </div>
   </div>
 
+  <div v-if="showAssembles">
+    <div class="header-container">
+      <h1>Assembles List</h1>
+      <button class="add-button" @click="showAssembleModal = true">Create Assemble Job</button>
+    </div>
+    <div class="cards-container">
+      <AssembleCard
+          v-for="assemble in data"
+          :key="assemble.id"
+          :assemble="assemble"
+      />
+    </div>
+  </div>
+
   <BookModal v-if="showVehicleModal" @close="showVehicleModal = false" />
   <WorkerModal v-if="showWorkerModal" @close="showWorkerModal = false" />
   <AdminModal v-if="showAdminModal" @close="showAdminModal = false" />
+  <AssembleModal v-if="showAssembleModal" @close="showAssembleModal = false" />
 
 </template>
 

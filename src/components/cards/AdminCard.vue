@@ -12,8 +12,9 @@ export default {
 
 <template>
   <div class="card">
-    <h3>{{ admin.firstname }} {{ admin.lastname }}</h3>
-    <p>{{ admin.email  }}</p>
+    <h3>Name : {{ admin.firstname }} {{ admin.lastname }}</h3>
+    <p>Email : {{ admin.email  }}</p>
+    <p>Assignee ID : {{ admin.nic  }}</p>
 
   </div>
 </template>

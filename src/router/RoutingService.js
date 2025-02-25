@@ -4,8 +4,13 @@ import LoginPage from "@/views/LoginPage.vue";
 import {useAuthStore} from "@/datastore/store";
 
 const routes = [
-    { path: "/", component: LoginPage },
     {
+        name: "Login",
+        path: "/",
+        component: LoginPage
+    },
+    {
+        name: "HomePage",
         path: "/home",
         component: HomePage,
         meta: { auth: true },

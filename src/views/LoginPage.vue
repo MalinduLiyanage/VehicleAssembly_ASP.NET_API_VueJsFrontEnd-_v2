@@ -23,7 +23,7 @@ export default {
               infoStore.setEmail(this.email);
 
               this.errorMessage = "";
-              this.$router.push("/home");
+              this.$router.push({ name: "HomePage"});
             } else {
               this.errorMessage = "Login Failed!";
             }
