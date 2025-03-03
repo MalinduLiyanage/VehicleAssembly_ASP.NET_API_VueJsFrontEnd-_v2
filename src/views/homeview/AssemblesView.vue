@@ -1,11 +1,10 @@
 <script>
-import AssembleCard from "@/components/cards/AssembleCard.vue";
 import apiClient from "@/services/apiClient";
 import AssembleModal from "@/components/modals/AssembleModal.vue";
 
 export default {
   name: "AssemblesView",
-  components: {AssembleModal, AssembleCard},
+  components: {AssembleModal},
   data() {
     return {
       showAssembleModal: false,
@@ -38,13 +37,39 @@ export default {
     <h1>Assembles List</h1>
     <button class="add-button" @click="showAssembleModal = true">Create Assemble Job</button>
   </div>
-  <div class="cards-container">
-    <AssembleCard
-        v-for="assemble in data"
+  <v-table density="compact" fixed-header>
+    <thead>
+    <tr>
+      <th class="text-left">
+        Assignee ID
+      </th>
+      <th class="text-left">
+        Vehicle ID
+      </th>
+      <th class="text-left">
+        Worker ID
+      </th>
+      <th class="text-left">
+        Date
+      </th>
+      <th class="text-left">
+        Task Completed
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr v-for="assemble in data"
         :key="assemble.id"
-        :assemble="assemble"
-    />
-  </div>
+        :assemble="assemble">
+      <td>{{ assemble.assignee_id }}</td>
+      <td>{{ assemble.vehicle_id }}</td>
+      <td>{{ assemble.nic }}</td>
+      <td>{{ assemble.date }}</td>
+      <td>{{ assemble.isCompleted }}</td>
+    </tr>
+    </tbody>
+  </v-table>
+
   <AssembleModal v-if="showAssembleModal" @close="showAssembleModal = false" />
 </template>
 

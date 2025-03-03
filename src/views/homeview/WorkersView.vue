@@ -1,11 +1,11 @@
 <script>
-import WorkerCard from "@/components/cards/WorkerCard.vue";
+
 import apiClient from "@/services/apiClient";
 import WorkerModal from "@/components/modals/WorkerModal.vue";
 
 export default {
   name: "WorkersView",
-  components: {WorkerModal, WorkerCard},
+  components: {WorkerModal},
   data() {
     return {
       showWorkerModal: false,
@@ -38,13 +38,38 @@ export default {
     <h1>Worker List</h1>
     <button class="add-button" @click="showWorkerModal = true">Add Worker</button>
   </div>
-  <div class="cards-container">
-    <WorkerCard
-        v-for="worker in data"
+  <v-table density="compact" fixed-header>
+    <thead>
+    <tr>
+      <th class="text-left">
+        Worker ID
+      </th>
+      <th class="text-left">
+        First Name
+      </th>
+      <th class="text-left">
+        Last Name
+      </th>
+      <th class="text-left">
+        Address
+      </th>
+      <th class="text-left">
+        Job Role
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr v-for="worker in data"
         :key="worker.id"
-        :worker="worker"
-    />
-  </div>
+        :worker="worker">
+      <td>{{ worker.nic }}</td>
+      <td>{{ worker.firstname }}</td>
+      <td>{{ worker.lastname }}</td>
+      <td>{{ worker.address }}</td>
+      <td>{{ worker.job_role }}</td>
+    </tr>
+    </tbody>
+  </v-table>
   <WorkerModal v-if="showWorkerModal" @close="showWorkerModal = false" />
 </template>
 

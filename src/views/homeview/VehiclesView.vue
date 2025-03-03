@@ -1,11 +1,11 @@
 <script>
-import VehicleCard from "@/components/cards/VehicleCard.vue";
+
 import apiClient from "@/services/apiClient";
 import BookModal from "@/components/modals/VehicleModal.vue";
 
 export default {
   name: "VehiclesView",
-  components: {BookModal, VehicleCard},
+  components: {BookModal},
   data() {
     return {
       showVehicleModal: false,
@@ -38,13 +38,34 @@ export default {
     <h1>Vehicle List</h1>
     <button class="add-button" @click="showVehicleModal = true">Add Vehicle</button>
   </div>
-  <div class="cards-container">
-    <VehicleCard
-        v-for="vehicle in data"
+  <v-table density="compact" fixed-header>
+    <thead>
+    <tr>
+      <th class="text-left">
+        Vehicle ID
+      </th>
+      <th class="text-left">
+        Model
+      </th>
+      <th class="text-left">
+        Color
+      </th>
+      <th class="text-left">
+        Engine
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr v-for="vehicle in data"
         :key="vehicle.id"
-        :vehicle="vehicle"
-    />
-  </div>
+        :vehicle="vehicle">
+      <td>{{ vehicle.vehicle_id }}</td>
+      <td>{{ vehicle.model }}</td>
+      <td>{{ vehicle.color }}</td>
+      <td>{{ vehicle.engine }}</td>
+    </tr>
+    </tbody>
+  </v-table>
   <BookModal v-if="showVehicleModal" @close="showVehicleModal = false" />
 </template>
 

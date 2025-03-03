@@ -1,11 +1,11 @@
 <script>
-import AdminCard from "@/components/cards/AdminCard.vue";
-import AdminModal from "@/components/modals/AdminModal.vue";
+
 import apiClient from "@/services/apiClient";
+import AdminModal from "@/components/modals/AdminModal.vue";
 
 export default {
   name: "AdminsView",
-  components: {AdminModal, AdminCard},
+  components: {AdminModal},
   data() {
     return {
       showAdminModal: false,
@@ -38,14 +38,38 @@ export default {
     <h1>Admin List</h1>
     <button class="add-button" @click="showAdminModal = true">Add Admin</button>
   </div>
-  <div class="cards-container">
-    <AdminCard
-        v-for="admin in data"
+
+  <v-table density="compact" fixed-header>
+    <thead>
+    <tr>
+      <th class="text-left">
+        NIC
+      </th>
+      <th class="text-left">
+        First Name
+      </th>
+      <th class="text-left">
+        Last Name
+      </th>
+      <th class="text-left">
+        Email
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr v-for="admin in data"
         :key="admin.id"
-        :admin="admin"
-    />
-  </div>
+        :admin="admin">
+      <td>{{ admin.nic }}</td>
+      <td>{{ admin.firstname }}</td>
+      <td>{{ admin.lastname }}</td>
+      <td>{{ admin.email }}</td>
+    </tr>
+    </tbody>
+  </v-table>
+
   <AdminModal v-if="showAdminModal" @close="showAdminModal = false" />
+
 </template>
 
 <style scoped>

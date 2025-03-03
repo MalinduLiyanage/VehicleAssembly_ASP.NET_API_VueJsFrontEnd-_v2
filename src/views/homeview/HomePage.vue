@@ -53,26 +53,31 @@ export default {
 </script>
 
 <template>
-  <navbar-component @showVehicles="showVehiclesView()"
-                    @showWorkers="showWorkersView()"
-                    @showAdmins="showAdminsView()"
-                    @showAssembles="showAssemblesView()"/>
-  <div v-if="showVehicles">
-    <VehiclesView></VehiclesView>
-  </div>
+  <v-app>
+    <navbar-component
+        @showVehicles="showVehiclesView"
+        @showWorkers="showWorkersView"
+        @showAdmins="showAdminsView"
+        @showAssembles="showAssemblesView"
+    />
+    <v-main class="pa-10">
+      <div v-if="showVehicles">
+        <VehiclesView />
+      </div>
 
-  <div v-if="showWorkers">
-    <WorkersView></WorkersView>
-  </div>
+      <div v-if="showWorkers">
+        <WorkersView />
+      </div>
 
-  <div v-if="showAdmins">
-    <AdminsView></AdminsView>
-  </div>
+      <div v-if="showAdmins">
+        <AdminsView />
+      </div>
 
-  <div v-if="showAssembles">
-    <AssemblesView></AssemblesView>
-  </div>
-
+      <div v-if="showAssembles">
+        <AssemblesView />
+      </div>
+    </v-main>
+  </v-app>
 </template>
 
 <style scoped>

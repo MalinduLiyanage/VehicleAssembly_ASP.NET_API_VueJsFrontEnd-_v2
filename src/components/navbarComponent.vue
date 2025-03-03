@@ -42,75 +42,22 @@ export default {
 </script>
 
 <template>
-  <nav class="navbar">
-    <button class="nav-button-assembles" @click="showAssembles">Assembles</button>
-    <button class="nav-button" @click="showVehicles">Vehicles</button>
-    <button class="nav-button" @click="showWorkers">Workers</button>
-    <button class="nav-button" @click="showAdmins">Admins</button>
-    <button class="nav-button-logout" @click="logout">Logout</button>
-    <p class="nav-button-info" >Welcome {{this.email}}</p>
-  </nav>
+  <v-app-bar app color="primary" density="compact">
+    <v-container class="d-flex align-center">
+      <v-btn variant="text" @click="showAssembles">Assembles</v-btn>
+      <v-btn variant="text" @click="showVehicles">Vehicles</v-btn>
+      <v-btn variant="text" @click="showWorkers">Workers</v-btn>
+      <v-btn variant="text" @click="showAdmins">Admins</v-btn>
+
+      <v-spacer></v-spacer>
+
+      <v-label class="mr-4">Welcome, {{ email }}</v-label>
+
+      <v-btn variant="elevated" color="red" @click="logout">Logout</v-btn>
+    </v-container>
+  </v-app-bar>
 </template>
 
 <style scoped>
-
-.navbar {
-  background-color: #aeb156;
-  padding: 10px;
-  border-radius: 8px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.nav-button {
-  background-color: #555;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  margin: 5px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background 0.3s;
-}
-
-.nav-button-info {
-  color: #1708e1;
-  border: none;
-  padding: 10px 15px;
-  margin: 5px;
-  cursor: default;
-  border-radius: 5px;
-}
-
-.nav-button-assembles {
-  background-color: #1560c1;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  margin: 5px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background 0.3s;
-}
-
-.nav-button-logout {
-  background-color: #af0a0a;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  margin: 5px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background 0.3s;
-}
-
-.nav-button:hover {
-  background-color: #777;
-}
-.nav-button-logout:hover {
-  background-color: #7a0707;
-}
 
 </style>
