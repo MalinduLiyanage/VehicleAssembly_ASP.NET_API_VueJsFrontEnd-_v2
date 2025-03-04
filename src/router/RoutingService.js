@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "@/views/homeview/HomePage.vue";
 import LoginPage from "@/views/LoginPage.vue";
-import {useAuthStore} from "@/datastore/store";
+import {authMiddleware} from "@/middleware/authmiddleware";
 
 const routes = [
     {
@@ -24,13 +24,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     if (to.meta.auth) {
-        const authStore = useAuthStore();
-        const token = authStore.getToken();
-        if (token) {
-            next();
-        } else {
-            next("/");
-        }
+        authMiddleware(to,from, next);
     } else {
         next();
     }
