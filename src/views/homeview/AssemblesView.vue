@@ -25,6 +25,12 @@ export default {
             this.errorMessage = "Error occurred: " + error.message;
           });
     },
+    getAttachmentLink(attachment) {
+      // Extracts the part after 'uploads/' from the file path
+      const filePath = attachment.split('uploads/')[1];
+      // Return the full URL by concatenating the backend base URL and the file path
+      return `http://localhost:5290/uploads/${filePath}`;
+    }
   },
   mounted() {
     this.fetchAssembles();
@@ -55,6 +61,9 @@ export default {
       <th class="text-left">
         Task Completed
       </th>
+      <th class="text-left">
+        Task Completed
+      </th>
     </tr>
     </thead>
     <tbody>
@@ -66,6 +75,10 @@ export default {
       <td>{{ assemble.nic }}</td>
       <td>{{ assemble.date }}</td>
       <td>{{ assemble.isCompleted }}</td>
+      <td>
+        <a v-if="assemble.attachment" :href="getAttachmentLink(assemble.attachment)" class="btn btn-primary" target="_blank">Download File</a>
+        <span v-else>No attachment available</span>
+      </td>
     </tr>
     </tbody>
   </v-table>
