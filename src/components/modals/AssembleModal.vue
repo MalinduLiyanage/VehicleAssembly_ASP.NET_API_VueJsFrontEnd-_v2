@@ -11,17 +11,28 @@ export default {
         nic: "",
         date: "",
         isCompleted: false,
+        assembly_attachment: null
       }
     };
   },
   methods: {
     submitForm() {
-      apiClient.post('/Assembles', {
-        assignee_id: this.assemble.assignee_id,
-        vehicle_id: this.assemble.vehicle_id,
-        nic: this.assemble.nic,
-        date: this.assemble.date,
-        isCompleted: this.assemble.isCompleted,
+      const formData = new FormData();
+      formData.append("assignee_id", this.assemble.assignee_id);
+      formData.append("vehicle_id", this.assemble.vehicle_id);
+      formData.append("nic", this.assemble.nic);
+      formData.append("date", this.assemble.date);
+      formData.append("isCompleted", this.assemble.isCompleted);
+
+      // Append file if exists
+      if (this.assemble.assembly_attachment) {
+        formData.append("assembly_attachment", this.assemble.assembly_attachment);
+      }
+
+      apiClient.post("/Assembles", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       })
           .then((response) => {
             if (response.data.status_code === 200) {
@@ -34,13 +45,20 @@ export default {
             console.error("Failed to add job:", error.message);
           });
 
-      this.assemble.assignee_id = "";
-      this.assemble.vehicle_id = "";
-      this.assemble.nic = "";
-      this.assemble.date = "";
-      this.assemble.isCompleted = false;
+      // Reset fields
+      this.assemble = {
+        assignee_id: "",
+        vehicle_id: "",
+        nic: "",
+        date: "",
+        isCompleted: false,
+        assembly_attachment: null,
+      };
 
       this.$emit("close");
+    },
+    handleFileUpload(event) {
+      this.assemble.assembly_attachment = event.target.files[0];
     },
     closeModal() {
       this.$emit("close");
@@ -68,6 +86,9 @@ export default {
 
         <label>Is Task Completed? : </label>
         <input v-model="assemble.isCompleted" type="checkbox" required />
+
+        <label>Attach Assembly File :</label>
+        <input type="file" @change="handleFileUpload" accept=".pdf,.jpg,.png,.doc,.docx" />
 
         <div class="modal-buttons">
           <button type="submit" class="add-button">Add</button>

@@ -26,10 +26,9 @@ export default {
           });
     },
     getAttachmentLink(attachment) {
-      // Extracts the part after 'uploads/' from the file path
-      const filePath = attachment.split('uploads/')[1];
-      // Return the full URL by concatenating the backend base URL and the file path
-      return `http://localhost:5290/uploads/${filePath}`;
+      if (!attachment) return "";
+      const fileName = attachment.split('\\').pop();
+      return `http://localhost:5290/uploads/${fileName}`;
     }
   },
   mounted() {
