@@ -13,7 +13,11 @@ const routes = [
         name: "HomePage",
         path: "/home",
         component: HomePage,
-        meta: { auth: true },
+        meta: {
+            middleware: [
+                authMiddleware
+            ]
+        },
     },
 ];
 
@@ -22,12 +26,39 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach((to, from, next) => {
-    if (to.meta.auth) {
-        authMiddleware(to,from, next);
-    } else {
-        next();
+function middlewarePipeline (context, middleware, index) {
+    const nextMiddleware = middleware[index]
+
+    if(!nextMiddleware){
+        return context.next
     }
-});
+
+    return () => {
+        const nextPipeline = middlewarePipeline(
+            context, middleware, index + 1
+        )
+        nextMiddleware({ ...context, next: nextPipeline })
+
+    }
+}
+
+router.beforeEach((to, from, next) => {
+
+    if (!to.meta.middleware) {
+        return next()
+    }
+
+    const middleware = to.meta.middleware;
+    const context = {
+        to,
+        from,
+        next,
+    }
+
+    return middleware[0]({
+        ...context,
+        next:middlewarePipeline(context, middleware,1)
+    })
+})
 
 export default router;

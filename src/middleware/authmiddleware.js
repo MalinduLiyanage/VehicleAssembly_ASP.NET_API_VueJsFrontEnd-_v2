@@ -1,6 +1,6 @@
 import {useAuthStore} from "@/datastore/store";
 
-export function authMiddleware(to, from, next) {
+export function authMiddleware({next}) {
     const authStore = useAuthStore();
     const token = authStore.getToken();
     if (token) {
