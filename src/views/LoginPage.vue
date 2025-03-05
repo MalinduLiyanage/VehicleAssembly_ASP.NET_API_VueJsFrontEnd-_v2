@@ -4,6 +4,7 @@ import {useAuthStore, useInfoStore} from "@/datastore/store";
 
 export default {
   name: "LoginPage",
+  components: {},
   data() {
     return {
       email: "",
@@ -23,7 +24,7 @@ export default {
               infoStore.setEmail(this.email);
 
               this.errorMessage = "";
-              this.$router.push({ name: "HomePage"});
+              this.$router.push({ name: "AssemblesPage"});
             } else {
               this.errorMessage = "Login Failed!";
             }
@@ -38,21 +39,26 @@ export default {
 </script>
 
 <template>
-  <div class="login-container">
-    <h2>Login</h2>
-    <form @submit.prevent="login">
-      <div class="input-group">
-        <label>Email:</label>
-        <input type="email" v-model="email" required />
+  <v-app>
+    <v-main class="pa-10">
+      <div class="login-container">
+        <h2>Login</h2>
+        <form @submit.prevent="login">
+          <div class="input-group">
+            <label>Email:</label>
+            <input type="email" v-model="email" required />
+          </div>
+          <div class="input-group">
+            <label>Password:</label>
+            <input type="password" v-model="password" required />
+          </div>
+          <button type="submit">Login</button>
+        </form>
+        <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
       </div>
-      <div class="input-group">
-        <label>Password:</label>
-        <input type="password" v-model="password" required />
-      </div>
-      <button type="submit">Login</button>
-    </form>
-    <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
-  </div>
+    </v-main>
+  </v-app>
+
 </template>
 
 <style scoped>

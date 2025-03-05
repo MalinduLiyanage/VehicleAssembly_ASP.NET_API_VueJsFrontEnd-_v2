@@ -1,7 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomePage from "@/views/homeview/HomePage.vue";
 import LoginPage from "@/views/LoginPage.vue";
 import {authMiddleware} from "@/middleware/authmiddleware";
+import AssemblesPage from "@/views/AssembleView/AssemblesPage.vue";
+import AdminsPage from "@/views/AdminView/AdminsPage.vue";
+import VehiclesPage from "@/views/VehicleView/VehiclesPage.vue";
+import WorkersPage from "@/views/WorkersView/WorkersPage.vue";
+import DashboardPage from "@/views/DashboardPage.vue";
 
 const routes = [
     {
@@ -10,15 +14,37 @@ const routes = [
         component: LoginPage
     },
     {
-        name: "HomePage",
-        path: "/home",
-        component: HomePage,
+        name: "DashboardPage",
+        path: "/dashboard",
+        component: DashboardPage,
+        children: [
+            {
+                name: "AssemblesPage",
+                path: "assembles",
+                component: AssemblesPage,
+            },
+            {
+                name: "AdminsPage",
+                path: "admins",
+                component: AdminsPage,
+            },
+            {
+                name: "VehiclesPage",
+                path: "vehicles",
+                component: VehiclesPage,
+            },
+            {
+                name: "WorkersPage",
+                path: "workers",
+                component: WorkersPage,
+            }
+        ],
         meta: {
             middleware: [
                 authMiddleware
             ]
-        },
-    },
+        }
+    }
 ];
 
 const router = createRouter({

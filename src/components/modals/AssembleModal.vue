@@ -24,7 +24,6 @@ export default {
       formData.append("date", this.assemble.date);
       formData.append("isCompleted", this.assemble.isCompleted);
 
-      // Append file if exists
       if (this.assemble.assembly_attachment) {
         formData.append("assembly_attachment", this.assemble.assembly_attachment);
       }
@@ -45,7 +44,6 @@ export default {
             console.error("Failed to add job:", error.message);
           });
 
-      // Reset fields
       this.assemble = {
         assignee_id: "",
         vehicle_id: "",
@@ -85,7 +83,7 @@ export default {
         <input v-model="assemble.date" type="date" required />
 
         <label>Is Task Completed? : </label>
-        <input v-model="assemble.isCompleted" type="checkbox" required />
+        <input v-model="assemble.isCompleted" type="checkbox"/>
 
         <label>Attach Assembly File :</label>
         <input type="file" @change="handleFileUpload" accept=".pdf,.jpg,.png,.doc,.docx" />
