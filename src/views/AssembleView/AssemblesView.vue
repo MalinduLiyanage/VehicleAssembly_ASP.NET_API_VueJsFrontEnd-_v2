@@ -1,13 +1,16 @@
 <script>
 import apiClient from "@/services/apiClient";
 import AssembleModal from "@/components/modals/AssembleModal.vue";
+import AssembleDetailModal from "@/components/modals/AssembleDetailModal.vue";
 
 export default {
   name: "AssemblesView",
-  components: {AssembleModal},
+  components: {AssembleDetailModal, AssembleModal},
   data() {
     return {
       showAssembleModal: false,
+      showDetailsModal: false,
+      selectedAssemble: null,
       data: [],
     }
   },
@@ -24,6 +27,10 @@ export default {
           .catch((error) => {
             this.errorMessage = "Error occurred: " + error.message;
           });
+    },
+    toggleInfo(assemble) {
+      this.selectedAssemble = assemble;
+      this.showDetailsModal = true;
     },
     getAttachmentLink(attachment) {
       if (!attachment) return "";
@@ -46,13 +53,13 @@ export default {
     <thead>
     <tr>
       <th class="text-left">
-        Assignee ID
+        Assignee Name
       </th>
       <th class="text-left">
-        Vehicle ID
+        Vehicle Name
       </th>
       <th class="text-left">
-        Worker ID
+        Worker Name
       </th>
       <th class="text-left">
         Date
@@ -61,7 +68,10 @@ export default {
         Task Completed
       </th>
       <th class="text-left">
-        Task Completed
+        Attachment
+      </th>
+      <th class="text-left">
+
       </th>
     </tr>
     </thead>
@@ -69,20 +79,25 @@ export default {
     <tr v-for="assemble in data"
         :key="assemble.id"
         :assemble="assemble">
-      <td>{{ assemble.assignee_id }}</td>
-      <td>{{ assemble.vehicle_id }}</td>
-      <td>{{ assemble.nic }}</td>
+      <td>{{ assemble.assignee_first_name }} {{ assemble.assignee_last_name }}</td>
+      <td>{{ assemble.model }}</td>
+      <td>{{ assemble.workerName }}</td>
       <td>{{ assemble.date }}</td>
       <td>{{ assemble.isCompleted }}</td>
       <td>
         <a v-if="assemble.attachment" :href="getAttachmentLink(assemble.attachment)" class="btn btn-primary" target="_blank">Download File</a>
         <span v-else>No attachment available</span>
       </td>
+      <td>
+        <button @click="toggleInfo(assemble)" class="btn btn-primary">See Info</button>
+      </td>
+
     </tr>
     </tbody>
   </v-table>
 
   <AssembleModal v-if="showAssembleModal" @close="showAssembleModal = false" />
+  <AssembleDetailModal v-if="showDetailsModal" :assemble="selectedAssemble" @close="showDetailsModal = false"></AssembleDetailModal>
 </template>
 
 <style scoped>

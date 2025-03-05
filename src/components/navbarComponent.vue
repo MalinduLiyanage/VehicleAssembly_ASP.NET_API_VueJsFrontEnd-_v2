@@ -1,5 +1,6 @@
 <script>
-import {useAuthStore, useInfoStore} from "@/datastore/store";
+import {useAuthStore} from "@/datastore/authstore";
+import {useInfoStore} from "@/datastore/infostore";
 
 export default {
   name: "navbarComponent",

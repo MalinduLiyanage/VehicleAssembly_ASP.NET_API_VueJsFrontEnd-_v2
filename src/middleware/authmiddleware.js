@@ -1,4 +1,4 @@
-import {useAuthStore} from "@/datastore/store";
+import {useAuthStore} from "@/datastore/authstore";
 
 export function authMiddleware({next}) {
     const authStore = useAuthStore();
